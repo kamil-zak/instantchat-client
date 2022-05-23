@@ -1,5 +1,7 @@
+import RoutesSwitch from './navigation/Routes';
+
 function App() {
-  return <h1>App</h1>;
+  return <RoutesSwitch />;
 }
 
 export default App;

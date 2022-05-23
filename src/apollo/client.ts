@@ -6,18 +6,17 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { clearTokens, getToken } from '../services/tokens';
 import { typePolicies } from './typePolicies';
 import { EMPTY_USER_PAYLOAD } from './queries/user';
+import { GRAPHQL_URL, WS_URL } from '../constants/config';
 
-const httpLink = createHttpLink({ uri: '/graphql' });
+const httpLink = createHttpLink({ uri: GRAPHQL_URL });
 
 const authLink = setContext((_, { headers }) => ({
   headers: { ...headers, authorization: `Bearer ${getToken()}` },
 })).concat(httpLink);
 
-const wsUrl = window.location.href.replace(/^http(s?:\/\/.*?)\/.*$/, `ws$1/graphql`);
-
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: wsUrl,
+    url: WS_URL,
     connectionParams: () => ({ authorization: `Bearer ${getToken()}` }),
   }),
 );
