@@ -10,6 +10,7 @@ import GlobalStyles from './styles/global';
 import theme from './styles/theme';
 import isToday from 'dayjs/plugin/isToday';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import 'react-toastify/dist/ReactToastify.css';
 
 dayjs.extend(isToday);
 dayjs.extend(relativeTime);

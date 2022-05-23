@@ -3,6 +3,7 @@ import { useIsLogged } from '../../providers/AuthProvider';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import styled from 'styled-components';
 import Sidebar from './Sidebar/Sidebar';
+import MessageSubscriber from '../../apollo/MessageSubscriber';
 
 const StyledPanel = styled.div`
   height: 100vh;
@@ -19,6 +20,7 @@ const ProtectedPanel = () => {
 
   return (
     <StyledPanel>
+      <MessageSubscriber />
       <Sidebar />
       <Outlet />
     </StyledPanel>
