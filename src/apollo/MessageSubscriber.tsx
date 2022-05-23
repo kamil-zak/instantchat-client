@@ -8,11 +8,11 @@ import { GET_CONVERSATIONS, IGetConversationsData } from './queries/conversation
 import { GET_ONLY_MESSAGES, IMessageSubArgs, IMessageSubData, MESSAGE_SUB } from './queries/message';
 
 const MessageSubscriber = () => {
-  const { id: userId } = useAuth();
+  const { user } = useAuth();
   const activeConversation = useParams().conversationId;
 
   useSubscription<IMessageSubData, IMessageSubArgs>(MESSAGE_SUB, {
-    variables: { userId },
+    variables: { userId: user.id },
     onSubscriptionData: ({ subscriptionData, client }) => {
       const newMessage = subscriptionData.data?.newMessage;
       if (!newMessage) return;

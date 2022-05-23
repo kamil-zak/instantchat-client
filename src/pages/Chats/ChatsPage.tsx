@@ -8,8 +8,8 @@ import NewChatBox from './components/NewChatBox';
 import { ChatsList } from './ChatsPage.styles';
 
 const ChatsPage = () => {
-  const { id: userId } = useAuth();
-  const { data } = useQuery<IGetChatsData, IGetChatsArgs>(GET_CHATS, { variables: { userId } });
+  const { user } = useAuth();
+  const { data } = useQuery<IGetChatsData, IGetChatsArgs>(GET_CHATS, { variables: { userId: user.id } });
   if (!data) return null;
   return (
     <Page header="ChatBoxes">

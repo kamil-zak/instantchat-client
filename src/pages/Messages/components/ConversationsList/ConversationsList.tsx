@@ -6,7 +6,7 @@ import ConversationItem from '../ConversationItem/ConversationItem';
 import { GET_CONVERSATIONS, IGetConversationsArgs, IGetConversationsData } from '../../../../apollo/queries/conversation';
 
 const ConversationsList = () => {
-  const user = useAuth();
+  const { user } = useAuth();
   const { data } = useQuery<IGetConversationsData, IGetConversationsArgs>(GET_CONVERSATIONS, {
     variables: { userId: user.id },
   });
