@@ -21,6 +21,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
+        env:
+          VITE_SERVER_HTTP: https://instantchat.kamilzak.pl
+          VITE_SERVER_WS: wss://instantchat.kamilzak.pl
       - name: Copying files to server
         uses: appleboy/scp-action@master
         with:
