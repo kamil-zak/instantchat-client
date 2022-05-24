@@ -39,3 +39,16 @@ export const CONVERSATION_UNREAD_FRAGMENT = gql`
     unreadCount
   }
 `;
+
+export interface ICreateConversationData {
+  createConversation: { id: string; token: string };
+}
+
+export const CREATE_CONVERSATION = gql`
+  mutation ($chatId: ID!) {
+    createConversation(chatId: $chatId) {
+      id
+      token
+    }
+  }
+`;

@@ -38,14 +38,15 @@ export const GET_ONLY_MESSAGES = gql`
   }
 `;
 
-export interface ISendResponseArgs {
+export interface ISendMessageArgs {
   conversationId: string;
   content: string;
+  isResponse: boolean;
 }
 
-export const SEND_RESPONSE = gql`
-  mutation ($content: String!, $conversationId: ID!) {
-    sendMessage(content: $content, conversationId: $conversationId, isResponse: true)
+export const SEND_MESSAGE = gql`
+  mutation ($content: String!, $conversationId: ID!, $isResponse: Boolean) {
+    sendMessage(content: $content, conversationId: $conversationId, isResponse: $isResponse)
   }
 `;
 
@@ -65,6 +66,19 @@ export const MESSAGE_SUB = gql`
         id
         name
       }
+      message {
+        id
+        isResponse
+        content
+        time
+      }
+    }
+  }
+`;
+
+export const CHATBOX_MESSAGE_SUB = gql`
+  subscription ($conversationId: ID!) {
+    newMessage: newConversationMessage(conversationId: $conversationId) {
       message {
         id
         isResponse

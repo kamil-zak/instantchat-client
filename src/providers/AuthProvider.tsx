@@ -2,7 +2,7 @@ import { useApolloClient, useQuery } from '@apollo/client';
 import { EMPTY_USER_PAYLOAD, IUserPayloadData, USER_PAYLOAD } from '../apollo/queries/user';
 import { IUserPayload } from '../interfaces/user';
 import { createContext, FC, useContext } from 'react';
-import { clearTokens } from '../services/tokens';
+import { clearPanelStorage } from '../services/storage';
 
 interface IAuthContext {
   user: IUserPayload;
@@ -28,7 +28,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   const client = useApolloClient();
   const logout = () => {
-    clearTokens();
+    clearPanelStorage();
     client.writeQuery({ query: EMPTY_USER_PAYLOAD, data: { userPayload: null } });
     client.resetStore();
   };

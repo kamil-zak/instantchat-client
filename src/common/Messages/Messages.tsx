@@ -1,18 +1,22 @@
 import { useQuery } from '@apollo/client';
 import { Key, MouseEventHandler, useCallback, useRef } from 'react';
-import { useParams } from 'react-router';
-import ResponseForm from '../ResponseForm/ResponseForm';
+import MessageForm from './MessageForm/MessageForm';
 import { useEffect } from 'react';
-import { Messages, MessagesListWrapper } from './MessagesList.styles';
-import MessageItem from '../MessageItem/MessageItem';
-import { QUERY_MESSAGES_COUNT } from '../../../../constants/config';
-import { GET_MESSAGES, IGetMessagesArgs, IGetMessagesData } from '../../../../apollo/queries/message';
+import { MessagesList, MessagesListWrapper } from './Messages.styles';
+import MessageItem from './MessageItem/MessageItem';
+import { QUERY_MESSAGES_COUNT } from '../../constants/config';
+import { GET_MESSAGES, IGetMessagesArgs, IGetMessagesData } from '../../apollo/queries/message';
 
-const MessagesList = () => {
-  const { conversationId = '' } = useParams();
+interface IMessagesProps {
+  conversationId: string | null;
+  isChatBox?: boolean;
+  onSend: (message: string) => void;
+}
 
+const Messages = ({ conversationId, onSend, isChatBox }: IMessagesProps) => {
   const { data, fetchMore } = useQuery<IGetMessagesData, IGetMessagesArgs>(GET_MESSAGES, {
-    variables: { conversationId, limit: QUERY_MESSAGES_COUNT },
+    variables: { conversationId: conversationId || '', limit: QUERY_MESSAGES_COUNT },
+    skip: !conversationId,
   });
   const messagesRef = useRef<HTMLDivElement>(null);
 
@@ -63,14 +67,14 @@ const MessagesList = () => {
   }, [getMore]);
   return (
     <MessagesListWrapper>
-      <Messages ref={messagesRef}>
+      <MessagesList ref={messagesRef}>
         {messages.map((message) => (
-          <MessageItem key={message.id as Key} {...message} />
+          <MessageItem key={message.id as Key} {...message} isChatBox={isChatBox} />
         ))}
-      </Messages>
-      <ResponseForm />
+      </MessagesList>
+      <MessageForm onSend={onSend} />
     </MessagesListWrapper>
   );
 };
 
-export default MessagesList;
+export default Messages;

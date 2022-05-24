@@ -1,15 +1,5 @@
-import styled, { css, keyframes } from 'styled-components';
-
-const slideIn = keyframes`
- from {
-        transform: translateY(5px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0px);
-        opacity: 1;
-    }
-`;
+import styled, { css } from 'styled-components';
+import { slideIn } from '../../../styles/animations';
 
 interface WrapperProps {
   isResponse: boolean;
@@ -18,7 +8,7 @@ export const MessageItemWrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: column;
   margin-right: auto;
-  animation: ${slideIn} 0.3s ease-in-out;
+  animation: ${slideIn(5)} 0.3s ease-in-out;
   max-width: 100%;
   &:first-child {
     margin-top: auto;

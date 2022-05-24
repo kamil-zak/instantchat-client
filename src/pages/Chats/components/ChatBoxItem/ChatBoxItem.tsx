@@ -3,7 +3,8 @@ import StyledText from '../../../../components/StyledText/StyledText';
 import { IChat } from '../../../../interfaces/chat';
 import { ChatBoxItemWrapper } from './ChatBoxItem.styles';
 
-const getScript = (id: string) => `test id ${id}`;
+const chatBoxUrl = import.meta.env.VITE_CHATBOX_URL || 'http://instantchat.kamilzak.pl/chatbox.js?chatId=';
+const getScript = (id: string) => `<script src='${chatBoxUrl}${id}'></script>`;
 
 const ChatBoxItem = ({ id, name }: IChat) => {
   return (

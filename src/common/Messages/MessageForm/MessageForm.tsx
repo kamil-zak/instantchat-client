@@ -1,23 +1,19 @@
-import { useMutation } from '@apollo/client';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ISendResponseArgs, SEND_RESPONSE } from '../../../../apollo/queries/message';
 import { FormEventHandler } from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router';
-import { ResponseFormInput, ResponseFormSubmit, ResponseFormWrapper } from './ResponseForm.styles';
+import { ResponseFormInput, ResponseFormSubmit, ResponseFormWrapper } from './MessageForm.styles';
 
-const ResponseForm = () => {
-  const { conversationId = '' } = useParams();
+interface IMessageFormProps {
+  onSend: (message: string) => void;
+}
+
+const MessageForm = ({ onSend }: IMessageFormProps) => {
   const [response, setResponse] = useState('');
-
-  const [send] = useMutation<string, ISendResponseArgs>(SEND_RESPONSE, {
-    variables: { conversationId, content: response },
-  });
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
-    if (response) send();
+    if (response) onSend(response);
     setResponse('');
   };
 
@@ -31,4 +27,4 @@ const ResponseForm = () => {
   );
 };
 
-export default ResponseForm;
+export default MessageForm;

@@ -3,7 +3,7 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { setContext } from '@apollo/client/link/context';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { getToken } from '../services/tokens';
+import { getToken } from '../services/storage';
 import { typePolicies } from './typePolicies';
 import { GRAPHQL_URL, WS_URL } from '../constants/config';
 

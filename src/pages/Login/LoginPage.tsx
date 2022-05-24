@@ -6,6 +6,7 @@ import { useIsLogged } from '../../providers/AuthProvider';
 import { FormEventHandler, useState } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { LoginBox, LoginBoxContent, LoginBoxForm, LoginBoxHero, LoginBoxRegister } from './LoginPage.styles';
+import { updatePanelStorage } from '../../services/storage';
 
 const SIGN_IN = gql`
   mutation signIn($email: String!, $password: String!) {
@@ -22,7 +23,7 @@ const LoginPage = () => {
   const client = useApolloClient();
   const [signIn] = useMutation(SIGN_IN, {
     onCompleted: ({ signIn }) => {
-      localStorage.setItem('token', signIn.token);
+      updatePanelStorage(signIn);
       client.resetStore();
     },
     onError: () => null,
