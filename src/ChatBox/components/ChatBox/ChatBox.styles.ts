@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChatBoxDimensions } from '../../../constants/config';
+import { chatBoxDimensions } from '../../../constants/config';
 import { slideIn } from '../../../styles/animations';
 
 export const ChatBoxWrapper = styled.div`
@@ -7,8 +7,8 @@ export const ChatBoxWrapper = styled.div`
   background: white;
   border-radius: 10px;
   border: 1px solid #ddd;
-  width: ${ChatBoxDimensions.width}px;
-  height: ${ChatBoxDimensions.height}px;
+  width: ${chatBoxDimensions.width}px;
+  height: ${chatBoxDimensions.height}px;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   display: grid;
