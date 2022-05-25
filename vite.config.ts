@@ -5,6 +5,14 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/panel/',
+  server: {
+    proxy: {
+      '/graphql': {
+        target: 'http://localhost:3434',
+        ws: true,
+      },
+    },
+  },
   build: {
     rollupOptions: {
       input: {
