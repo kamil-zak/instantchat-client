@@ -19,3 +19,9 @@ export const EMPTY_USER_PAYLOAD = gql`
     userPayload
   }
 `;
+
+export const LOGOUT = gql`
+  mutation {
+    signOut
+  }
+`;

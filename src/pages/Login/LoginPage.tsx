@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import StyledText from '../../components/StyledText/StyledText';
@@ -6,13 +6,13 @@ import { useIsLogged } from '../../providers/AuthProvider';
 import { FormEventHandler, useState } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { LoginBox, LoginBoxContent, LoginBoxForm, LoginBoxHero, LoginBoxRegister } from './LoginPage.styles';
-import { updatePanelStorage } from '../../services/storage';
+import { setUserToken } from '../../services/auth';
+import { toast } from 'react-toastify';
 
 const SIGN_IN = gql`
   mutation signIn($email: String!, $password: String!) {
     signIn(email: $email, password: $password) {
       token
-      refreshToken
     }
   }
 `;
@@ -20,13 +20,12 @@ const SIGN_IN = gql`
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const client = useApolloClient();
   const [signIn] = useMutation(SIGN_IN, {
-    onCompleted: ({ signIn }) => {
-      updatePanelStorage(signIn);
-      client.resetStore();
+    update: (_, { data }) => {
+      setUserToken(data.signIn.token);
     },
-    onError: () => null,
+    refetchQueries: ['userPayload'],
+    onError: () => toast.error('Nie udało sie zalogować'),
   });
 
   const state = (useLocation().state || {}) as { pathname?: string };

@@ -3,7 +3,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import Messages from '../../../common/Messages/Messages';
 import { ChatBoxCloseBtn, ChatBoxHeader, ChatBoxWrapper } from './ChatBox.styles';
 import { useState } from 'react';
-import { chatBoxId, getConversationId, updateChatBoxStorage } from '../../../services/storage';
+import { chatBoxId, getConversationId, updateConversation } from '../../../services/chatbox';
 import { useMutation, useSubscription } from '@apollo/client';
 import { CREATE_CONVERSATION, ICreateConversationData } from '../../../apollo/queries/conversation';
 import { CHATBOX_MESSAGE_SUB, GET_ONLY_MESSAGES, ISendMessageArgs, SEND_MESSAGE } from '../../../apollo/queries/message';
@@ -30,7 +30,7 @@ const ChatBox = ({ onClose }: IChatBoxProps) => {
     variables: { chatId: chatBoxId },
     onCompleted: ({ createConversation: conversationData }) => {
       setId(conversationData.id);
-      updateChatBoxStorage(conversationData);
+      updateConversation(conversationData);
     },
   });
 

@@ -1,8 +1,8 @@
-import { useApolloClient, useQuery } from '@apollo/client';
-import { EMPTY_USER_PAYLOAD, IUserPayloadData, USER_PAYLOAD } from '../apollo/queries/user';
+import { useMutation, useQuery } from '@apollo/client';
+import { EMPTY_USER_PAYLOAD, IUserPayloadData, LOGOUT, USER_PAYLOAD } from '../apollo/queries/user';
 import { IUserPayload } from '../interfaces/user';
 import { createContext, FC, useContext } from 'react';
-import { clearPanelStorage } from '../services/storage';
+import { setUserToken } from '../services/auth';
 
 interface IAuthContext {
   user: IUserPayload;
@@ -26,12 +26,13 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const { data, loading } = useQuery<IUserPayloadData>(USER_PAYLOAD);
   const user = data?.userPayload;
 
-  const client = useApolloClient();
-  const logout = () => {
-    clearPanelStorage();
-    client.writeQuery({ query: EMPTY_USER_PAYLOAD, data: { userPayload: null } });
-    client.resetStore();
-  };
+  const [logout] = useMutation(LOGOUT, {
+    update: (cache) => {
+      setUserToken('');
+      cache.writeQuery({ query: EMPTY_USER_PAYLOAD, data: { userPayload: null } });
+      cache.reset();
+    },
+  });
 
   const value = user ? { logout, user } : null;
   return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
