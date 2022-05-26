@@ -3,7 +3,6 @@ import { useIsLogged } from '../../providers/AuthProvider';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import styled from 'styled-components';
 import Sidebar from './Sidebar/Sidebar';
-import useUserSubscribe from '../../hooks/useUserSubscribe';
 
 const StyledPanel = styled.div`
   height: 100vh;
@@ -12,8 +11,6 @@ const StyledPanel = styled.div`
 `;
 
 const ProtectedPanel = () => {
-  useUserSubscribe();
-
   const { pathname } = useLocation();
 
   if (!useIsLogged()) {
