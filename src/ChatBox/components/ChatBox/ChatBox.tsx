@@ -1,12 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import Messages from '../../../common/Messages/Messages';
-import { ChatBoxCloseBtn, ChatBoxHeader, ChatBoxWrapper } from './ChatBox.styles';
+import Messages from '../../../containers/Messages/Messages';
 import { useState } from 'react';
 import { chatBoxId, getConversationId, updateConversation } from '../../../services/chatbox';
-import { useMutation, useSubscription } from '@apollo/client';
-import { CREATE_CONVERSATION, ICreateConversationData } from '../../../apollo/queries/conversation';
-import { CHATBOX_MESSAGE_SUB, GET_ONLY_MESSAGES, ISendMessageArgs, SEND_MESSAGE } from '../../../apollo/queries/message';
+import { useMutation } from '@apollo/client';
+import ChatBoxPresenter from '../../../presenters/ChatBoxPresenter/ChatBoxPresenter';
+import useConversationSubscribe from '../../../hooks/useConversationSubscribe';
+import { CREATE_CON, ICreateConArgs, ICreateConData, ISendMessageArgs, SEND_MESSAGE } from '../../../apollo/queries/mutations';
 
 interface IChatBoxProps {
   onClose: () => void;
@@ -15,43 +13,27 @@ interface IChatBoxProps {
 const ChatBox = ({ onClose }: IChatBoxProps) => {
   const [id, setId] = useState(getConversationId());
 
-  useSubscription(CHATBOX_MESSAGE_SUB, {
-    variables: { conversationId: id },
-    skip: !id,
-    onSubscriptionData: ({ client, subscriptionData }) => {
-      const newMessage = subscriptionData.data?.newMessage;
-      if (!newMessage) return;
-      const data = { getMessages: { messages: [newMessage.message] } };
-      client.writeQuery({ query: GET_ONLY_MESSAGES, data, variables: { conversationId: id } });
-    },
-  });
+  useConversationSubscribe(id);
 
-  const [createConversationMutate] = useMutation<ICreateConversationData>(CREATE_CONVERSATION, {
+  const [createConversation] = useMutation<ICreateConData, ICreateConArgs>(CREATE_CON, {
     variables: { chatId: chatBoxId },
-    onCompleted: ({ createConversation: conversationData }) => {
+    onCompleted: ({ conversationData }) => {
       setId(conversationData.id);
       updateConversation(conversationData);
     },
   });
 
-  const [sendMessageMutate] = useMutation<string, ISendMessageArgs>(SEND_MESSAGE);
-
+  const [send] = useMutation<string, ISendMessageArgs>(SEND_MESSAGE);
   const sendMessage = async (content: string) => {
-    const conversationId = id || (await createConversationMutate()).data?.createConversation?.id;
+    const conversationId = id || (await createConversation()).data?.conversationData?.id;
     if (!conversationId) return;
-    await sendMessageMutate({ variables: { conversationId, content, isResponse: false } });
+    await send({ variables: { conversationId, content, isResponse: false } });
   };
 
   return (
-    <ChatBoxWrapper>
-      <ChatBoxHeader>
-        Skontaktuj się z nami!
-        <ChatBoxCloseBtn onClick={onClose}>
-          <FontAwesomeIcon icon={faXmark} />
-        </ChatBoxCloseBtn>
-      </ChatBoxHeader>
+    <ChatBoxPresenter onClose={onClose}>
       <Messages conversationId={id} onSend={sendMessage} isChatBox />
-    </ChatBoxWrapper>
+    </ChatBoxPresenter>
   );
 };
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { chatBoxDimensions } from '../../../constants/config';
-import { slideIn } from '../../../styles/animations';
+import { chatBoxDimensions } from '../../constants/config';
+import { slideIn } from '../../styles/animations';
 
 export const ChatBoxWrapper = styled.div`
   box-sizing: border-box;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { chatBoxButtonDimensions, chatBoxDimensions } from '../constants/config';
 import ChatBox from './components/ChatBox/ChatBox';
-import ChatButton from './components/ChatButton/ChatButton';
+import ChatButton from '../components/ChatButton/ChatButton';
 
 const ChatBoxApp = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +11,8 @@ const ChatBoxApp = () => {
     window?.top?.postMessage({ instantchatDimensions }, '*');
   }, [isOpen]);
 
-  return isOpen ? <ChatBox onClose={() => setIsOpen(false)} /> : <ChatButton onClick={() => setIsOpen(true)} />;
+  if (isOpen) return <ChatBox onClose={() => setIsOpen(false)} />;
+  return <ChatButton onClick={() => setIsOpen(true)} />;
 };
 
 export default ChatBoxApp;

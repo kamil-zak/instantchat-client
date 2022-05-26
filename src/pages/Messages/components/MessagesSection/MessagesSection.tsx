@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { useParams } from 'react-router';
-import { ISendMessageArgs, SEND_MESSAGE } from '../../../../apollo/queries/message';
-import Messages from '../../../../common/Messages/Messages';
+import { ISendMessageArgs, SEND_MESSAGE } from '../../../../apollo/queries/mutations';
+import Messages from '../../../../containers/Messages/Messages';
 import { MessagesSectionWrapper } from './MessagesSection.styles';
 
 const MessageSection = () => {

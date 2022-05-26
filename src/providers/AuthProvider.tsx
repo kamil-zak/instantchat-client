@@ -1,8 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { EMPTY_USER_PAYLOAD, IUserPayloadData, LOGOUT, USER_PAYLOAD } from '../apollo/queries/user';
 import { IUserPayload } from '../interfaces/user';
 import { createContext, FC, useContext } from 'react';
 import { setUserToken } from '../services/auth';
+import { IUserPayloadData, USER_PAYLOAD } from '../apollo/queries/queries';
+import { LOGOUT } from '../apollo/queries/mutations';
 
 interface IAuthContext {
   user: IUserPayload;
@@ -18,18 +19,18 @@ export const useAuth = () => {
   return auth;
 };
 
-type Props = {
+interface IAuthProviderProps {
   children?: React.ReactNode;
-};
+}
 
-export const AuthProvider: FC<Props> = ({ children }) => {
+export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
   const { data, loading } = useQuery<IUserPayloadData>(USER_PAYLOAD);
   const user = data?.userPayload;
 
   const [logout] = useMutation(LOGOUT, {
     update: (cache) => {
       setUserToken('');
-      cache.writeQuery({ query: EMPTY_USER_PAYLOAD, data: { userPayload: null } });
+      cache.writeQuery({ query: USER_PAYLOAD, data: { userPayload: null } });
       cache.reset();
     },
   });

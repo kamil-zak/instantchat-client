@@ -1,13 +1,11 @@
 import { useQuery } from '@apollo/client';
-import { Key, useCallback, useRef } from 'react';
-import MessageForm from './MessageForm/MessageForm';
+import { useCallback, useRef } from 'react';
 import { useEffect } from 'react';
-import { MessagesList, MessagesListWrapper } from './Messages.styles';
-import MessageItem from './MessageItem/MessageItem';
+import { GET_FULL_MESSAGES, IGetFullMessagesArgs, IGetFullMessagesData } from '../../apollo/queries/queries';
 import { QUERY_MESSAGES_COUNT } from '../../constants/config';
-import { GET_MESSAGES, IGetMessagesArgs, IGetMessagesData } from '../../apollo/queries/message';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import useScrollDown from '../../hooks/useScrollDown';
+import MessagesPresenter from '../../presenters/MessagesPresenter/MessagesPresenter';
 
 interface IMessagesProps {
   conversationId: string | null;
@@ -16,7 +14,7 @@ interface IMessagesProps {
 }
 
 const Messages = ({ conversationId, onSend, isChatBox }: IMessagesProps) => {
-  const { data, fetchMore } = useQuery<IGetMessagesData, IGetMessagesArgs>(GET_MESSAGES, {
+  const { data, fetchMore } = useQuery<IGetFullMessagesData, IGetFullMessagesArgs>(GET_FULL_MESSAGES, {
     variables: { conversationId: conversationId || '', limit: QUERY_MESSAGES_COUNT },
     skip: !conversationId,
   });
@@ -24,7 +22,7 @@ const Messages = ({ conversationId, onSend, isChatBox }: IMessagesProps) => {
   const messagesRef = useRef<HTMLDivElement>(null);
   const scrollDown = useScrollDown(messagesRef);
 
-  const { messages = [], hasMore = false } = data?.getMessages || {};
+  const { messages = [], hasMore = false } = data?.messagesData || {};
   const firstId = messages?.[0]?.id;
   const lastId = messages[messages.length - 1]?.id;
 
@@ -45,16 +43,7 @@ const Messages = ({ conversationId, onSend, isChatBox }: IMessagesProps) => {
 
   useInfiniteScroll(messagesRef, getMore);
 
-  return (
-    <MessagesListWrapper>
-      <MessagesList ref={messagesRef}>
-        {messages.map((message) => (
-          <MessageItem key={message.id as Key} {...message} isChatBox={isChatBox} />
-        ))}
-      </MessagesList>
-      <MessageForm onSend={onSend} />
-    </MessagesListWrapper>
-  );
+  return <MessagesPresenter ref={messagesRef} messages={messages} onSend={onSend} isChatBox={isChatBox} />;
 };
 
 export default Messages;

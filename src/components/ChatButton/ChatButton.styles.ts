@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { chatBoxButtonDimensions } from '../../../constants/config';
+import { chatBoxButtonDimensions } from '../../constants/config';
 
 export const ChatButtonWrapper = styled.button`
   color: white;

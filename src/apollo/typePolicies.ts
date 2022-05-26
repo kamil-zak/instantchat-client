@@ -1,8 +1,12 @@
 import { FieldMergeFunction, TypePolicies } from '@apollo/client';
 
+interface IRef {
+  __ref: string;
+}
+
 interface IMessagesRefs {
   hasMore: boolean;
-  messages: { __ref: string }[];
+  messages: IRef[];
 }
 
 const empty: IMessagesRefs = {
@@ -11,7 +15,7 @@ const empty: IMessagesRefs = {
 };
 
 const mergeMessages: FieldMergeFunction = (prev: IMessagesRefs = empty, incoming: IMessagesRefs = empty, { args }) => {
-  const notExist = ({ __ref }: { __ref: string }) => prev.messages.every((message) => message.__ref !== __ref);
+  const notExist = ({ __ref }: IRef) => prev.messages.every((message) => message.__ref !== __ref);
   const newMessages = incoming.messages.filter(notExist);
   return {
     hasMore: incoming.hasMore ?? prev.hasMore,

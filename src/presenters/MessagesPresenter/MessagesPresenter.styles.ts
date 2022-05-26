@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MessagesListWrapper = styled.div`
+export const MessagesWrapper = styled.div`
   display: grid;
   grid-template-rows: calc(100% - 50px) 50px;
   height: 100%;

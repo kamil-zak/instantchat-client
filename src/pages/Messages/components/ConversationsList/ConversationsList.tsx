@@ -3,7 +3,7 @@ import { useAuth } from '../../../../providers/AuthProvider';
 import { ConversationsListWrapper } from './ConversationsList.styles';
 import { Key } from 'react';
 import ConversationItem from '../ConversationItem/ConversationItem';
-import { GET_CONVERSATIONS, IGetConversationsArgs, IGetConversationsData } from '../../../../apollo/queries/conversation';
+import { GET_CONVERSATIONS, IGetConversationsArgs, IGetConversationsData } from '../../../../apollo/queries/queries';
 
 const ConversationsList = () => {
   const { user } = useAuth();

@@ -1,11 +1,11 @@
 import { Key } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_CHATS, IGetChatsArgs, IGetChatsData } from '../../apollo/queries/chat';
 import Page from '../../components/Page/Page';
 import { useAuth } from '../../providers/AuthProvider';
 import ChatBoxItem from './components/ChatBoxItem/ChatBoxItem';
 import NewChatBox from './components/NewChatBox';
 import { ChatsList } from './ChatsPage.styles';
+import { GET_CHATS, IGetChatsArgs, IGetChatsData } from '../../apollo/queries/queries';
 
 const ChatsPage = () => {
   const { user } = useAuth();

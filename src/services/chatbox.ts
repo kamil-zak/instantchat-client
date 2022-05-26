@@ -3,7 +3,7 @@ interface IConversationData {
   id: string;
 }
 
-export const chatBoxId = new URLSearchParams(window.location.search).get('chatId');
+export const chatBoxId = new URLSearchParams(window.location.search).get('chatId') || '';
 
 export const getConversationToken = () => {
   return Promise.resolve(localStorage.getItem(`conversationToken:${chatBoxId}`) || '');

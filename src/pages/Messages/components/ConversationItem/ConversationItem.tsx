@@ -6,13 +6,14 @@ import StyledText from '../../../../components/StyledText/StyledText';
 import { useParams } from 'react-router';
 import { useMutation } from '@apollo/client';
 import { useEffect } from 'react';
-import { CONVERSATION_UNREAD_FRAGMENT, MARK_AS_READ } from '../../../../apollo/queries/conversation';
 import { IConversation } from '../../../../interfaces/conversation';
+import { IMarkAsReadArgs, MARK_AS_READ } from '../../../../apollo/queries/mutations';
+import { CONVERSATION_UNREAD_FRAGMENT } from '../../../../apollo/queries/fragments';
 
 const ConversationItem = ({ id, chat, latestMessage, unreadCount }: IConversation) => {
   const isActive = useParams()?.conversationId === id;
 
-  const [markAsRead] = useMutation(MARK_AS_READ, {
+  const [markAsRead] = useMutation<boolean, IMarkAsReadArgs>(MARK_AS_READ, {
     variables: { conversationId: id },
     update: (cache) => {
       cache.writeFragment({
