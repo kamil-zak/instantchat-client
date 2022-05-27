@@ -1,6 +1,6 @@
 import 'styled-components';
 
-type colors = 'primary';
+type colors = 'primary' | 'primaryDark' | 'primarySuperDark' | 'gray' | 'danger';
 
 type fontSizes = 'xxs' | 'xs' | 's' | 'base' | 'lg' | 'xl';
 
@@ -12,5 +12,6 @@ declare module 'styled-components' {
     fontSizes: {
       [T in fontSizes]: string;
     };
+    boxShadow: string;
   }
 }
