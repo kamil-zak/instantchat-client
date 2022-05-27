@@ -33,6 +33,10 @@ export const typePolicies: TypePolicies = {
       getConversations: {
         keyArgs: false,
       },
+      getChats: {
+        keyArgs: false,
+        merge: (existing, incoming) => incoming,
+      },
     },
   },
 };
