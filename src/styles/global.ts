@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
 :root {
   font-size: 62.5%;
+  --toastify-color-info: ${({ theme }) => theme.colors.primary};
 }
 body {
   font-size: 1.6rem;

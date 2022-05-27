@@ -1,18 +1,36 @@
-import { useEffect, useState } from 'react';
-import { chatBoxButtonDimensions, chatBoxDimensions } from '../constants/config';
-import ChatBox from './components/ChatBox/ChatBox';
-import ChatButton from '../components/ChatButton/ChatButton';
+import { gql, useQuery } from '@apollo/client';
+import { IChat } from '../interfaces/chat';
+import { ChatBoxConfigProvider } from '../providers/ChatBoxConfigProvider';
+import ColorsProvider from '../providers/ColorsProvider';
+import { chatBoxId } from '../services/chatbox';
+import ChatBoxSwitch from './components/ChatBoxSwitch/ChatBoxSwitch';
+
+interface IGetChatData {
+  chat: Pick<IChat, 'title' | 'subtitle' | 'color'>;
+}
+interface IGetChatArgs {
+  chatId: string;
+}
+const GET_CHAT = gql`
+  query ($chatId: ID!) {
+    chat: getChat(chatId: $chatId) {
+      title
+      subtitle
+      color
+    }
+  }
+`;
 
 const ChatBoxApp = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const instantchatDimensions = isOpen ? chatBoxDimensions : chatBoxButtonDimensions;
-    window?.top?.postMessage({ instantchatDimensions }, '*');
-  }, [isOpen]);
-
-  if (isOpen) return <ChatBox onClose={() => setIsOpen(false)} />;
-  return <ChatButton onClick={() => setIsOpen(true)} />;
+  const { data } = useQuery<IGetChatData, IGetChatArgs>(GET_CHAT, { variables: { chatId: chatBoxId } });
+  if (!data) return null;
+  return (
+    <ColorsProvider primary={data.chat.color}>
+      <ChatBoxConfigProvider config={data.chat}>
+        <ChatBoxSwitch />
+      </ChatBoxConfigProvider>
+    </ColorsProvider>
+  );
 };
 
 export default ChatBoxApp;

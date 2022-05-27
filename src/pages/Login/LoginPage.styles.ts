@@ -6,7 +6,7 @@ export const LoginBox = styled.div`
   height: 550px;
   margin: 100px auto;
   border-radius: 10px;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: ${({ theme }) => theme.boxShadow};
   display: grid;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
@@ -14,7 +14,7 @@ export const LoginBox = styled.div`
   &::before {
     content: '';
     position: absolute;
-    background: linear-gradient(90deg, rgb(47, 38, 167) 0%, rgb(68, 93, 192) 100%);
+    background: ${({ theme }) => theme.colors.primary};
     width: 500px;
     height: 100%;
     transform: rotate(15deg) scale(1.5) translateX(-100px);

@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import { chatBoxButtonDimensions } from '../../constants/config';
+import { getContrastColor } from '../../utils/colors';
 
-export const ChatButtonWrapper = styled.button`
-  color: white;
+export const ChatButtonWrapper = styled.button.attrs(({ theme }) => ({
+  style: {
+    background: theme.colors.primary,
+    color: getContrastColor(theme.colors.primary),
+  },
+}))`
   width: ${chatBoxButtonDimensions.width}px;
   height: ${chatBoxButtonDimensions.height}px;
-  background: linear-gradient(90deg, rgba(35, 27, 164, 1) 0%, rgba(82, 108, 214, 1) 100%);
 
   border-radius: 35px;
   border: 0;

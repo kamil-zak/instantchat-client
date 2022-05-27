@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+export interface ISendMessageData {
+  id: string;
+}
 export interface ISendMessageArgs {
   conversationId: string;
   content: string;
@@ -7,21 +10,8 @@ export interface ISendMessageArgs {
 }
 export const SEND_MESSAGE = gql`
   mutation ($content: String!, $conversationId: ID!, $isResponse: Boolean) {
-    sendMessage(content: $content, conversationId: $conversationId, isResponse: $isResponse)
-  }
-`;
-
-export interface ICreateConData {
-  conversationData: { id: string; token: string };
-}
-export interface ICreateConArgs {
-  chatId: string;
-}
-export const CREATE_CON = gql`
-  mutation ($chatId: ID!) {
-    conversationData: createConversation(chatId: $chatId) {
+    sendedMessage: sendMessage(content: $content, conversationId: $conversationId, isResponse: $isResponse) {
       id
-      token
     }
   }
 `;
@@ -32,11 +22,5 @@ export interface IMarkAsReadArgs {
 export const MARK_AS_READ = gql`
   mutation markAsRead($conversationId: ID!) {
     markAsRead(conversationId: $conversationId)
-  }
-`;
-
-export const LOGOUT = gql`
-  mutation {
-    signOut
   }
 `;

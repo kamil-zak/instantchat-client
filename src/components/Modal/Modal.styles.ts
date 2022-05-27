@@ -19,7 +19,7 @@ export const Wrapper = styled(AbsoluteWrapper)`
 `;
 
 export const StyledTopBar = styled.div`
-  background: linear-gradient(90deg, rgb(47, 38, 167) 0%, rgb(68, 93, 192) 100%);
+  background: ${({ theme }) => theme.colors.primary};
   text-align: right;
   padding: 5px;
   color: white;

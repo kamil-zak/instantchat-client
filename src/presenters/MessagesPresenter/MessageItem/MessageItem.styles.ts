@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { slideIn } from '../../../styles/animations';
+import { getContrastColor } from '../../../utils/colors';
 
 interface WrapperProps {
   isResponse: boolean;
@@ -22,22 +23,16 @@ export const MessageItemWrapper = styled.div<WrapperProps>`
     `}
 `;
 
-export const MessageItemContent = styled.div<WrapperProps>`
+export const MessageItemContent = styled.div.attrs<WrapperProps>(({ theme, isResponse }) => ({
+  style: isResponse ? { background: theme.colors.primary, color: getContrastColor(theme.colors.primary) } : {},
+}))<WrapperProps>`
   padding: 10px;
   margin: 0;
-
   background: lightgray;
   color: black;
   border-radius: 10px;
   font-size: 14px;
   overflow-wrap: break-word;
-
-  ${({ isResponse }) =>
-    isResponse &&
-    css`
-      background: linear-gradient(90deg, rgb(47, 38, 167) 0%, rgb(68, 93, 192) 100%);
-      color: white;
-    `}
 `;
 
 export const MessageItemTime = styled.div<WrapperProps>`

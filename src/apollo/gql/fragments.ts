@@ -19,5 +19,8 @@ export const CHAT_FRAGMENT = gql`
   fragment chatFields on Chat {
     id
     name
+    title
+    subtitle
+    color
   }
 `;

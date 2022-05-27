@@ -2,8 +2,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import { IUserPayload } from '../interfaces/user';
 import { createContext, FC, useContext } from 'react';
 import { setUserToken } from '../services/auth';
-import { IUserPayloadData, USER_PAYLOAD } from '../apollo/queries/queries';
-import { LOGOUT } from '../apollo/queries/mutations';
+import { IUserPayloadData, USER_PAYLOAD } from '../apollo/gql/queries/user';
+import { LOGOUT } from '../apollo/gql/mutations/user';
 
 interface IAuthContext {
   user: IUserPayload;

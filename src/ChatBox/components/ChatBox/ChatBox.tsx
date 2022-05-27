@@ -4,7 +4,9 @@ import { chatBoxId, getConversationId, updateConversation } from '../../../servi
 import { useMutation } from '@apollo/client';
 import ChatBoxPresenter from '../../../presenters/ChatBoxPresenter/ChatBoxPresenter';
 import useConversationSubscribe from '../../../hooks/useConversationSubscribe';
-import { CREATE_CON, ICreateConArgs, ICreateConData, ISendMessageArgs, SEND_MESSAGE } from '../../../apollo/queries/mutations';
+import { useChatBoxConfig } from '../../../providers/ChatBoxConfigProvider';
+import { CREATE_CON, ICreateConArgs, ICreateConData } from '../../../apollo/gql/mutations/conversation';
+import { ISendMessageArgs, ISendMessageData, SEND_MESSAGE } from '../../../apollo/gql/mutations/message';
 
 interface IChatBoxProps {
   onClose: () => void;
@@ -23,15 +25,16 @@ const ChatBox = ({ onClose }: IChatBoxProps) => {
     },
   });
 
-  const [send] = useMutation<string, ISendMessageArgs>(SEND_MESSAGE);
+  const [send] = useMutation<ISendMessageData, ISendMessageArgs>(SEND_MESSAGE);
   const sendMessage = async (content: string) => {
     const conversationId = id || (await createConversation()).data?.conversationData?.id;
     if (!conversationId) return;
     await send({ variables: { conversationId, content, isResponse: false } });
   };
 
+  const { title, subtitle } = useChatBoxConfig();
   return (
-    <ChatBoxPresenter onClose={onClose}>
+    <ChatBoxPresenter title={title} subtitle={subtitle} onClose={onClose}>
       <Messages conversationId={id} onSend={sendMessage} isChatBox />
     </ChatBoxPresenter>
   );

@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
-import PropTypes from 'prop-types';
 import { ChatButtonWrapper } from './ChatButton.styles';
 
 interface IChatButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const ChatButton = ({ onClick }: IChatButtonProps) => {
@@ -14,10 +13,6 @@ const ChatButton = ({ onClick }: IChatButtonProps) => {
       Chat
     </ChatButtonWrapper>
   );
-};
-
-ChatButton.propTypes = {
-  onClick: PropTypes.func,
 };
 
 export default ChatButton;

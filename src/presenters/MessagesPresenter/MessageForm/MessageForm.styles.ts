@@ -24,8 +24,7 @@ export const ResponseFormInput = styled.input.attrs(() => ({ placeholder: 'Wpisz
   }
 `;
 
-export const ResponseFormSubmit = styled.button`
-  color: rgba(35, 27, 164, 1);
+export const ResponseFormSubmit = styled.button.attrs(({ theme }) => ({ style: { color: theme.colors.primary } }))`
   padding: 5px;
   background: none;
   border: 0;

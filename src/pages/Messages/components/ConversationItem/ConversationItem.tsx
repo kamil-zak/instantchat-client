@@ -7,13 +7,13 @@ import { useParams } from 'react-router';
 import { useMutation } from '@apollo/client';
 import { useEffect } from 'react';
 import { IConversation } from '../../../../interfaces/conversation';
-import { IMarkAsReadArgs, MARK_AS_READ } from '../../../../apollo/queries/mutations';
-import { CONVERSATION_UNREAD_FRAGMENT } from '../../../../apollo/queries/fragments';
+import { CONVERSATION_UNREAD_FRAGMENT } from '../../../../apollo/gql/fragments';
+import { IMarkAsReadArgs, MARK_AS_READ } from '../../../../apollo/gql/mutations/message';
 
 const ConversationItem = ({ id, chat, latestMessage, unreadCount }: IConversation) => {
   const isActive = useParams()?.conversationId === id;
 
-  const [markAsRead] = useMutation<boolean, IMarkAsReadArgs>(MARK_AS_READ, {
+  const [markAsRead] = useMutation<null, IMarkAsReadArgs>(MARK_AS_READ, {
     variables: { conversationId: id },
     update: (cache) => {
       cache.writeFragment({

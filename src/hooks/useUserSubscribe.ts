@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { playNotify } from '../services/sounds';
 import { sliceText } from '../utils/format';
 import { insertMessagesCache, updateConversationsCache } from '../utils/cache';
-import { INewUserMessageArgs, INewUserMessageData, NEW_USER_MESSAGE } from '../apollo/queries/subscriptions';
+import { INewUserMessageArgs, INewUserMessageData, NEW_USER_MESSAGE } from '../apollo/gql/subscriptions/message';
+import ToastMsg from '../components/ToastMsg/ToastMsg';
 
 const useUserSubscribe = () => {
   const { user } = useAuth();
@@ -23,7 +24,7 @@ const useUserSubscribe = () => {
       updateConversationsCache(client, newMessage, conversationId);
 
       if (!newMessage.message.isResponse && newMessage.conversationId !== activeConversation) {
-        toast.info(`${newMessage.chat.name}: ${sliceText(newMessage.message.content, 30)}`);
+        toast.info(ToastMsg({ title: newMessage.chat.name, content: sliceText(newMessage.message.content, 30) }));
         playNotify();
       }
     },

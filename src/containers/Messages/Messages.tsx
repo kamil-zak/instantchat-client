@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useCallback, useRef } from 'react';
 import { useEffect } from 'react';
-import { GET_FULL_MESSAGES, IGetFullMessagesArgs, IGetFullMessagesData } from '../../apollo/queries/queries';
+import { GET_MESSAGES, IGetMessagesArgs, IGetMessagesData } from '../../apollo/gql/queries/message';
 import { QUERY_MESSAGES_COUNT } from '../../constants/config';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import useScrollDown from '../../hooks/useScrollDown';
@@ -14,7 +14,7 @@ interface IMessagesProps {
 }
 
 const Messages = ({ conversationId, onSend, isChatBox }: IMessagesProps) => {
-  const { data, fetchMore } = useQuery<IGetFullMessagesData, IGetFullMessagesArgs>(GET_FULL_MESSAGES, {
+  const { data, fetchMore } = useQuery<IGetMessagesData, IGetMessagesArgs>(GET_MESSAGES, {
     variables: { conversationId: conversationId || '', limit: QUERY_MESSAGES_COUNT },
     skip: !conversationId,
   });

@@ -5,6 +5,8 @@ import ProtectedPanel from './components/ProtectedPanel';
 import LoginPage from '../pages/Login/LoginPage';
 import MessagesPage from '../pages/Messages/MessagesPage';
 import ChatsPage from '../pages/Chats/ChatsPage';
+import NewChatPage from '../pages/NewChat/NewChatPage';
+import EditChatPage from '../pages/EditChat/EditChatPage';
 
 const RoutesSwitch = () => {
   return (
@@ -15,7 +17,11 @@ const RoutesSwitch = () => {
           <Route path={ROUTES.messages} element={<MessagesPage />}>
             <Route path=":conversationId" element={<MessagesPage />} />
           </Route>
-          <Route path={ROUTES.chats} element={<ChatsPage />} />
+          <Route path={ROUTES.chats}>
+            <Route path="new" element={<NewChatPage />} />
+            <Route path="edit/:chatId" element={<EditChatPage />} />
+            <Route path="" element={<ChatsPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<Navigate to={ROUTES.messages} />} />
       </Routes>

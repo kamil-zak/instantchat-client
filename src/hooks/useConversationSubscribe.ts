@@ -1,5 +1,5 @@
 import { useSubscription } from '@apollo/client';
-import { INewConMessageArgs, INewConMessageData, NEW_CONVERSATION_MESSAGE } from '../apollo/queries/subscriptions';
+import { INewConMessageArgs, INewConMessageData, NEW_CONVERSATION_MESSAGE } from '../apollo/gql/subscriptions/message';
 import { insertMessagesCache } from '../utils/cache';
 
 const useConversationSubscribe = (conversationId: string | null) => {

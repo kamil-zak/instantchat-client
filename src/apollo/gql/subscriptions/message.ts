@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
-import { IMessage, INewMessage } from '../../interfaces/message';
-import { CHAT_FRAGMENT, MESSAGE_FRAGMENT } from './fragments';
+import { IMessage, INewMessage } from '../../../interfaces/message';
+import { MESSAGE_FRAGMENT } from '../fragments';
 
 export interface INewUserMessageData {
   newMessage: INewMessage;
@@ -13,7 +13,7 @@ export const NEW_USER_MESSAGE = gql`
     newMessage: newUserMessage(userId: $userId) {
       conversationId
       chat {
-        ...chatFields
+        name
       }
       message {
         ...messageFields
@@ -21,7 +21,6 @@ export const NEW_USER_MESSAGE = gql`
     }
   }
   ${MESSAGE_FRAGMENT}
-  ${CHAT_FRAGMENT}
 `;
 
 export interface INewConMessageData {

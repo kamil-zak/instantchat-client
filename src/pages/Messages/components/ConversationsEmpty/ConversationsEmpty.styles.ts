@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-export const ChatBoxItemWrapper = styled.div`
+export const ConversationsEmptyWrapper = styled.div`
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 `;
