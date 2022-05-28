@@ -7,7 +7,7 @@ export interface IUserPayloadData {
 export const USER_PAYLOAD = gql`
   query userPayload {
     userPayload {
-      id
+      userId
       email
     }
   }

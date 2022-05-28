@@ -15,7 +15,7 @@ import { ChatItemColumns, ChatItemPreview, ChatItemWrapper } from './ChatItem.st
 const getScript = (id: string) => `<script src='${SERVER}/chatbox.js?chatId=${id}'></script>`;
 
 const ChatBoxItem = ({ id, name, title, subtitle, color }: IChat) => {
-  const [deleteChat] = useMutation<IDeleteChatData, IDeleteChatArgs>(DELETE_CHAT, {
+  const [deleteChat, { loading }] = useMutation<IDeleteChatData, IDeleteChatArgs>(DELETE_CHAT, {
     variables: { chatId: id },
     update: (cache) => {
       cache.updateQuery<IGetChatsData, IGetChatsArgs>({ query: GET_CHATS }, (data) => {
@@ -42,7 +42,7 @@ const ChatBoxItem = ({ id, name, title, subtitle, color }: IChat) => {
           </ChatItemPreview>
           <Flex direction="row">
             <Button onClick={() => navigate(`edit/${id}`)}>Edit</Button>
-            <Button onClick={() => deleteChat()} bordered color="danger">
+            <Button onClick={() => deleteChat()} spinner={loading} bordered color="danger">
               Delete
             </Button>
           </Flex>

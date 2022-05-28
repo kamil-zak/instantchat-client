@@ -16,9 +16,10 @@ import LayoutItem from '../../components/LayoutItem/LayoutItem';
 interface IChatBoxEditorProps {
   onSubmit: (data: IChatBoxFormFields) => void;
   values?: IChatBoxFormFields;
+  isSaving: boolean;
 }
 
-const ChatBoxEditor = ({ onSubmit, values }: IChatBoxEditorProps) => {
+const ChatBoxEditor = ({ onSubmit, values, isSaving }: IChatBoxEditorProps) => {
   const methods = useForm<IChatBoxFormFields>({
     resolver: chatBoxFormResolver,
     mode: 'onBlur',
@@ -49,7 +50,9 @@ const ChatBoxEditor = ({ onSubmit, values }: IChatBoxEditorProps) => {
           <LayoutItem align="center">
             <ColorPicker color={displayColor} onChange={setColor} />
           </LayoutItem>
-          <Button type="submit">Save</Button>
+          <Button type="submit" spinner={isSaving}>
+            Save
+          </Button>
         </ChatBoxEditorForm>
       </FormProvider>
       <ChatBoxPreview>

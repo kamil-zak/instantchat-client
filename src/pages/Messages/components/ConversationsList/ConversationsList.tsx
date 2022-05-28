@@ -5,19 +5,20 @@ import { Key } from 'react';
 import ConversationItem from '../ConversationItem/ConversationItem';
 import { GET_CONVERSATIONS, IGetConversationsArgs, IGetConversationsData } from '../../../../apollo/gql/queries/conversation';
 import ConversationsEmpty from '../ConversationsEmpty/ConversationsEmpty';
+import { LoadingBar } from '../../../../components/LoadingBar/LoadingBar';
 
 const ConversationsList = () => {
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const { data } = useQuery<IGetConversationsData, IGetConversationsArgs>(GET_CONVERSATIONS, {
-    variables: { userId: user.id },
+    variables: { userId: userId },
   });
-  const conversations = data?.conversations ?? [];
+  if (!data) return <LoadingBar />;
   return (
     <ConversationsListWrapper>
-      {conversations.map((conversation) => (
+      {data.conversations.map((conversation) => (
         <ConversationItem key={conversation.id as Key} {...conversation} />
       ))}
-      {!conversations.length && <ConversationsEmpty />}
+      {!data.conversations.length && <ConversationsEmpty />}
     </ConversationsListWrapper>
   );
 };

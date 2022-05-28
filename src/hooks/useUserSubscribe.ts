@@ -9,12 +9,12 @@ import { INewUserMessageArgs, INewUserMessageData, NEW_USER_MESSAGE } from '../a
 import ToastMsg from '../components/ToastMsg/ToastMsg';
 
 const useUserSubscribe = () => {
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const activeConversation = useParams().conversationId;
 
   useSubscription<INewUserMessageData, INewUserMessageArgs>(NEW_USER_MESSAGE, {
-    variables: { userId: user.id },
-    skip: !user.id,
+    variables: { userId },
+    skip: !userId,
     onSubscriptionData: ({ subscriptionData, client }) => {
       const newMessage = subscriptionData.data?.newMessage;
       if (!newMessage) return;

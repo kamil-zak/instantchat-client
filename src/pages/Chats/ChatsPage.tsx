@@ -12,11 +12,11 @@ import StyledText from '../../components/StyledText/StyledText';
 import Flex from '../../components/Flex/Flex';
 
 const ChatsPage = () => {
-  const { user } = useAuth();
-  const { data } = useQuery<IGetChatsData, IGetChatsArgs>(GET_CHATS, { variables: { userId: user.id } });
-  if (!data) return null;
+  const { userId } = useAuth();
+  const { data, loading } = useQuery<IGetChatsData, IGetChatsArgs>(GET_CHATS, { variables: { userId } });
+  const { chats = [] } = data || {};
   return (
-    <Page header="ChatBoxes">
+    <Page header="ChatBoxes" loading={loading}>
       <ChatsPageWrapper>
         <LayoutItem align="center">
           <Link to="new">
@@ -24,11 +24,11 @@ const ChatsPage = () => {
           </Link>
         </LayoutItem>
         <ChatsList>
-          {data.chats.map((chat) => (
+          {chats.map((chat) => (
             <ChatItem key={chat.id as Key} {...chat} />
           ))}
         </ChatsList>
-        {!data.chats.length && (
+        {!chats.length && (
           <Flex gap={5} alignItems="center">
             <StyledText>This place is empty </StyledText>
             <StyledText color="gray" size="s">

@@ -19,3 +19,8 @@ const chatBoxFormSchema = yup
   .required();
 
 export const chatBoxFormResolver = yupResolver(chatBoxFormSchema);
+
+export interface ILoginFormFields {
+  email: string;
+  password: string;
+}

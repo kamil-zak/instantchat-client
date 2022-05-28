@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useCallback, useRef } from 'react';
 import { useEffect } from 'react';
 import { GET_MESSAGES, IGetMessagesArgs, IGetMessagesData } from '../../apollo/gql/queries/message';
+import { LoadingBar } from '../../components/LoadingBar/LoadingBar';
 import { QUERY_MESSAGES_COUNT } from '../../constants/config';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import useScrollDown from '../../hooks/useScrollDown';
@@ -14,7 +15,7 @@ interface IMessagesProps {
 }
 
 const Messages = ({ conversationId, onSend, isChatBox }: IMessagesProps) => {
-  const { data, fetchMore } = useQuery<IGetMessagesData, IGetMessagesArgs>(GET_MESSAGES, {
+  const { data, fetchMore, loading } = useQuery<IGetMessagesData, IGetMessagesArgs>(GET_MESSAGES, {
     variables: { conversationId: conversationId || '', limit: QUERY_MESSAGES_COUNT },
     skip: !conversationId,
   });
@@ -42,7 +43,7 @@ const Messages = ({ conversationId, onSend, isChatBox }: IMessagesProps) => {
   }, [lastId, scrollDown]);
 
   useInfiniteScroll(messagesRef, getMore);
-
+  if (loading) return <LoadingBar />;
   return <MessagesPresenter ref={messagesRef} messages={messages} onSend={onSend} isChatBox={isChatBox} />;
 };
 

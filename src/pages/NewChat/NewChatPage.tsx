@@ -10,7 +10,7 @@ import { IChatBoxFormFields } from '../../utils/validations';
 const NewChatPage = () => {
   const navigate = useNavigate();
 
-  const [create] = useMutation<ICreateChatData, ICreateChatArgs>(CREATE_CHAT, {
+  const [create, { loading }] = useMutation<ICreateChatData, ICreateChatArgs>(CREATE_CHAT, {
     onCompleted: () => navigate('..'),
     update: (cache, { data }) => {
       if (!data) return;
@@ -22,14 +22,14 @@ const NewChatPage = () => {
     },
   });
 
-  const { user } = useAuth();
+  const { userId } = useAuth();
   const createChatBox = (data: IChatBoxFormFields) => {
-    create({ variables: { userId: user.id, details: data } });
+    create({ variables: { userId, details: data } });
   };
 
   return (
     <Page header="New ChatBox">
-      <ChatBoxEditor onSubmit={createChatBox} />
+      <ChatBoxEditor onSubmit={createChatBox} isSaving={loading} />
     </Page>
   );
 };
