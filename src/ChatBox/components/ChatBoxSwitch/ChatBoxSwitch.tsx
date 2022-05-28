@@ -7,7 +7,8 @@ const ChatBoxSwitch = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const instantchatDimensions = isOpen ? chatBoxDimensions : chatBoxButtonDimensions;
+    const dimensions = isOpen ? chatBoxDimensions : chatBoxButtonDimensions;
+    const instantchatDimensions = { width: dimensions.width + 30, height: dimensions.height + 30 };
     window?.top?.postMessage({ instantchatDimensions }, '*');
   }, [isOpen]);
 

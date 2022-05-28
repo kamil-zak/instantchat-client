@@ -3,6 +3,7 @@ import { IChat } from '../interfaces/chat';
 import { ChatBoxConfigProvider } from '../providers/ChatBoxConfigProvider';
 import ColorsProvider from '../providers/ColorsProvider';
 import { chatBoxId } from '../services/chatbox';
+import { ChatBoxAppWrapper } from './ChatBoxApp.styles';
 import ChatBoxSwitch from './components/ChatBoxSwitch/ChatBoxSwitch';
 
 interface IGetChatData {
@@ -27,7 +28,9 @@ const ChatBoxApp = () => {
   return (
     <ColorsProvider primary={data.chat.color}>
       <ChatBoxConfigProvider config={data.chat}>
-        <ChatBoxSwitch />
+        <ChatBoxAppWrapper>
+          <ChatBoxSwitch />
+        </ChatBoxAppWrapper>
       </ChatBoxConfigProvider>
     </ColorsProvider>
   );
