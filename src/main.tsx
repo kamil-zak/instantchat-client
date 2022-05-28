@@ -4,18 +4,15 @@ import App from './App';
 import { AuthProvider } from './providers/AuthProvider';
 import './utils/dayjsConfig';
 import 'react-toastify/dist/ReactToastify.css';
-import getClient from './apollo/client';
-import { getUserToken } from './services/auth';
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import GlobalStyles from './styles/global';
-
-const client = getClient(getUserToken);
+import panelClient from './apollo/panelClient';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
+    <ApolloProvider client={panelClient}>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
         <AuthProvider>
