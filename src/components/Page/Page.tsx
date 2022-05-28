@@ -1,19 +1,21 @@
 import StyledText from '../StyledText/StyledText';
 import { ReactNode } from 'react';
-import { PageWrapper, PageHeader } from './Page.styles';
+import { PageWrapper, PageHeader, PageContent } from './Page.styles';
+import { LoadingBar } from '../LoadingBar/LoadingBar';
 
 interface IPageProps {
   header: string;
   children: ReactNode;
+  loading?: boolean;
 }
 
-const Page = ({ header, children }: IPageProps) => {
+const Page = ({ header, loading, children }: IPageProps) => {
   return (
     <PageWrapper>
       <PageHeader>
         <StyledText>{header}</StyledText>
       </PageHeader>
-      <div>{children}</div>
+      <PageContent>{loading ? <LoadingBar /> : children}</PageContent>
     </PageWrapper>
   );
 };
