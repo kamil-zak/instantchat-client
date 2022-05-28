@@ -1,6 +1,6 @@
 import 'styled-components';
 
-type colors = 'primary' | 'primaryDark' | 'primarySuperDark' | 'gray' | 'danger';
+type colors = 'primary' | 'primaryDark' | 'primarySuperDark' | 'gray' | 'grayLight' | 'danger';
 
 type fontSizes = 'xxs' | 'xs' | 's' | 'base' | 'lg' | 'xl';
 

@@ -6,6 +6,7 @@ const theme: DefaultTheme = {
     primaryDark: '#2f26a7',
     primarySuperDark: '#141047',
     gray: '#514f63',
+    grayLight: '#908ea4',
     danger: '#b40041',
   },
   fontSizes: {
