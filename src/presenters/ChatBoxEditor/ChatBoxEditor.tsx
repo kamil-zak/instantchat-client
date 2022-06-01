@@ -58,7 +58,7 @@ const ChatBoxEditor = ({ onSubmit, values, isSaving }: IChatBoxEditorProps) => {
       <ChatBoxPreview>
         <ColorsProvider primary={displayColor}>
           <ChatBoxPresenter title={title} subtitle={subtitle}>
-            <MessagesPresenter messages={exampleMessages} onSend={() => {}} isChatBox />
+            <MessagesPresenter messages={exampleMessages} isChatBox />
           </ChatBoxPresenter>
           <ChatButton />
         </ColorsProvider>

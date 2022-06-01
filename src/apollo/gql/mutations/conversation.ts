@@ -14,3 +14,18 @@ export const CREATE_CON = gql`
     }
   }
 `;
+
+export interface IIsTypingArgs {
+  conversationId: string;
+}
+export const IS_TYPING = gql`
+  mutation ($conversationId: ID!) {
+    isTyping(conversationId: $conversationId)
+  }
+`;
+
+export const IS_TYPING_WIDGET = gql`
+  mutation ($conversationId: ID!) {
+    isTypingWidget(conversationId: $conversationId)
+  }
+`;
