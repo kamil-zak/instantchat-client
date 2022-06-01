@@ -17,6 +17,7 @@ const empty: IMessagesRefs = {
 const mergeMessages: FieldMergeFunction = (prev: IMessagesRefs = empty, incoming: IMessagesRefs = empty, { args }) => {
   const notExist = ({ __ref }: IRef) => prev.messages.every((message) => message.__ref !== __ref);
   const newMessages = incoming.messages.filter(notExist);
+
   return {
     hasMore: incoming.hasMore ?? prev.hasMore,
     messages: args?.limit ? [...newMessages, ...prev.messages] : [...prev.messages, ...newMessages],
@@ -36,6 +37,17 @@ export const typePolicies: TypePolicies = {
       getChats: {
         keyArgs: false,
         merge: (existing, incoming) => incoming,
+      },
+    },
+  },
+};
+
+export const typePoliciesWidget: TypePolicies = {
+  Query: {
+    fields: {
+      getMessagesWidget: {
+        keyArgs: ['conversationId'],
+        merge: mergeMessages,
       },
     },
   },

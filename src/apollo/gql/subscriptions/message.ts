@@ -2,15 +2,15 @@ import { gql } from '@apollo/client';
 import { IMessage, INewMessage } from '../../../interfaces/message';
 import { MESSAGE_FRAGMENT } from '../fragments';
 
-export interface INewUserMessageData {
+export interface INewMessageData {
   newMessage: INewMessage;
 }
-export interface INewUserMessageArgs {
+export interface INewMessageArgs {
   userId: string;
 }
-export const NEW_USER_MESSAGE = gql`
+export const NEW_MESSAGE = gql`
   subscription ($userId: ID!) {
-    newMessage: newUserMessage(userId: $userId) {
+    newMessage: newMessage(userId: $userId) {
       conversationId
       chat {
         name
@@ -23,17 +23,17 @@ export const NEW_USER_MESSAGE = gql`
   ${MESSAGE_FRAGMENT}
 `;
 
-export interface INewConMessageData {
+export interface INewMessageWidgetData {
   newMessage: {
     message: IMessage;
   };
 }
-export interface INewConMessageArgs {
+export interface INewMessageWidgetArgs {
   conversationId: string;
 }
-export const NEW_CONVERSATION_MESSAGE = gql`
+export const NEW_MESSAGE_WIDGET = gql`
   subscription ($conversationId: ID!) {
-    newMessage: newConversationMessage(conversationId: $conversationId) {
+    newMessage: newMessageWidget(conversationId: $conversationId) {
       message {
         ...messageFields
       }

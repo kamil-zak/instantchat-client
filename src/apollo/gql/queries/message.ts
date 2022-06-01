@@ -21,3 +21,15 @@ export const GET_MESSAGES = gql`
   }
   ${MESSAGE_FRAGMENT}
 `;
+
+export const GET_MESSAGES_WIDGET = gql`
+  query getMessagesWidget($conversationId: ID!, $before: ID, $limit: Int) {
+    messagesData: getMessagesWidget(conversationId: $conversationId, before: $before, limit: $limit) {
+      hasMore
+      messages {
+        ...messageFields
+      }
+    }
+  }
+  ${MESSAGE_FRAGMENT}
+`;

@@ -10,7 +10,7 @@ const MessageSection = () => {
   const [sendMessage] = useMutation<ISendMessageData, ISendMessageArgs>(SEND_MESSAGE);
 
   const send = (content: string) => {
-    sendMessage({ variables: { content, conversationId, isResponse: true } });
+    sendMessage({ variables: { content, conversationId } });
   };
 
   return <MessagesSectionWrapper>{conversationId && <Messages conversationId={conversationId} onSend={send} />}</MessagesSectionWrapper>;

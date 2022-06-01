@@ -41,7 +41,7 @@ const ConversationItem = ({ id, chat, latestMessage, unreadCount }: IConversatio
           </StyledText>
           <StyledText size="xxs" bold={!!unreadCount}>
             <ConversationItemContent>
-              {latestMessage.isResponse ? 'Ty: ' : ''}
+              {latestMessage.isResponse ? 'You: ' : ''}
               {latestMessage.content}
             </ConversationItemContent>
           </StyledText>

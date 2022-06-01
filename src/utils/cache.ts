@@ -1,29 +1,6 @@
-import { ApolloClient, gql } from '@apollo/client';
-import { MESSAGE_FRAGMENT } from '../apollo/gql/fragments';
+import { ApolloClient } from '@apollo/client';
 import { GET_CONVERSATIONS, IGetConversationsData } from '../apollo/gql/queries/conversation';
-import { IMessage, INewMessage } from '../interfaces/message';
-
-interface IGetMessagesData {
-  messagesData: { messages: IMessage[] };
-}
-interface IGetMessagesArgs {
-  conversationId: string;
-}
-const GET_MESSAGES = gql`
-  query getMessages($conversationId: ID!) {
-    messagesData: getMessages(conversationId: $conversationId) {
-      messages {
-        ...messageFields
-      }
-    }
-  }
-  ${MESSAGE_FRAGMENT}
-`;
-
-export const insertMessagesCache = (client: ApolloClient<object>, message: IMessage, conversationId: string) => {
-  const data = { messagesData: { messages: [message] } };
-  client.writeQuery<IGetMessagesData, IGetMessagesArgs>({ query: GET_MESSAGES, variables: { conversationId }, data });
-};
+import { INewMessage } from '../interfaces/message';
 
 export const updateConversationsCache = (client: ApolloClient<object>, newMessage: INewMessage, conversationId: string) => {
   const queryData = client.readQuery<IGetConversationsData>({ query: GET_CONVERSATIONS });

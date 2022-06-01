@@ -6,11 +6,18 @@ export interface ISendMessageData {
 export interface ISendMessageArgs {
   conversationId: string;
   content: string;
-  isResponse: boolean;
 }
 export const SEND_MESSAGE = gql`
-  mutation ($content: String!, $conversationId: ID!, $isResponse: Boolean) {
-    sendedMessage: sendMessage(content: $content, conversationId: $conversationId, isResponse: $isResponse) {
+  mutation ($content: String!, $conversationId: ID!) {
+    sendedMessage: sendMessage(content: $content, conversationId: $conversationId) {
+      id
+    }
+  }
+`;
+
+export const SEND_MESSAGE_WIDGET = gql`
+  mutation ($content: String!, $conversationId: ID!) {
+    sendedMessage: sendMessageWidget(content: $content, conversationId: $conversationId) {
       id
     }
   }

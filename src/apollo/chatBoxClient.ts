@@ -1,6 +1,6 @@
 import { ApolloClient, from, InMemoryCache, split } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { typePolicies } from './typePolicies';
+import { typePoliciesWidget } from './typePolicies';
 import { getAuthLink, getWsLink } from './links';
 import { getConversationToken } from '../services/chatbox';
 
@@ -17,6 +17,6 @@ const splitLink = split(
   from([authLink]),
 );
 
-const chatBoxClient = new ApolloClient({ link: splitLink, cache: new InMemoryCache({ typePolicies }) });
+const chatBoxClient = new ApolloClient({ link: splitLink, cache: new InMemoryCache({ typePolicies: typePoliciesWidget }) });
 
 export default chatBoxClient;
